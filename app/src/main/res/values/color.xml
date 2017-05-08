@@ -1,0 +1,64 @@
+<resources>
+
+    <color name="default_bg">#F4F4F4</color>
+    <color name="default_color">#f4f4f4</color>
+    <color name="default_color_clicked">#c1c1c1</color>
+    <color name="cancel_bg_color">#f8f8f8</color>
+    <color name="cancel_bg_color_clicked">#e1e0e0</color>
+    <color name="touming">#00000000</color>
+
+    <color name="bai">#ffffff</color>
+    <color name="bai_90">#e5ffffff</color>
+    <color name="bai_80">#ccffffff</color>
+    <color name="bai_70">#b2ffffff</color>
+    <color name="bai_60">#99ffffff</color>
+    <color name="bai_50">#7fffffff</color>
+    <color name="bai_40">#66ffffff</color>
+    <color name="bai_30">#4cffffff</color>
+    <color name="bai_20">#33ffffff</color>
+    <color name="bai_10">#19ffffff</color>
+
+    <color name="hei">#000000</color>
+    <color name="hei_90">#e5000000</color>
+    <color name="hei_80">#cc000000</color>
+    <color name="hei_70">#b2000000</color>
+    <color name="hei_60">#99000000</color>
+    <color name="hei_50">#7f000000</color>
+    <color name="hei_40">#66000000</color>
+    <color name="hei_30">#4c000000</color>
+    <color name="hei_20">#33000000</color>
+    <color name="hei_10">#19000000</color>
+
+    <color name="fen">#ff6666</color>
+    <color name="black_overlay">#66000000</color>
+    <color name="gray_background">#e5e5e5</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="hong">#E51A18</color>
+    <color name="line_color">#523E2E</color>
+    <color name="menu_item_text_color">#333333</color>
+    <color name="news_item_has_read_textcolor">#828282</color>
+    <color name="news_item_no_read_textcolor">#363636</color>
+
+    <color name="under_line_indicator_color">#FF7169</color>
+
+    <color name="home_page_item_title_color">#666666</color>
+    <color name="home_page_item_content_text_color">#77000000</color>
+    <color name="home_page_item_divider_color">#cccccc</color>
+    <color name="home_page_item_outline_color">#cccccc</color>
+
+    <!--页面中tab，功能条,和内容区域的分割线颜色-->
+    <color name="actionbar_content_divier_color">#d8d8d8</color>
+
+    <color name="settings_item_title_color">#99000000</color>
+    <color name="settings_item_hint_color">#77000000</color>
+
+    <color name="text_color1">#7F7F7F</color>
+    <color name="text_color2">#ACAEB0</color>
+    <color name="hot_item_title_color">#333333</color>
+    <color name="hot_item_bottomtext_color">#b4b4b4</color>
+    <color name="color_9">#999999</color>
+    <color name="list_img_bg_default">#eeeeee</color>
+    <color name="red">#e3464a</color>
+    <color name="red_70">#EB7D80</color>
+</resources>
