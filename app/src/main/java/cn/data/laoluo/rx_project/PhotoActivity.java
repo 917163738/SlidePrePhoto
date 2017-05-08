@@ -37,6 +37,7 @@ public class PhotoActivity extends FragmentActivity implements View.OnClickListe
     private AdapterActivityDetailPageBase mPageAdapter;
     MyRecyclerView mRecyclerView;
     private GalleryAdapter mAdapter;
+    private boolean mIsLineAtLeft=true;
     private int mOriginHeight;
     private Handler mHandler = new Handler(Looper.getMainLooper()) {
         @Override
@@ -48,13 +49,13 @@ public class PhotoActivity extends FragmentActivity implements View.OnClickListe
             } else if (msg.what == 111) {
 
                 View view = mRecyclerView.findViewHolderForLayoutPosition(mPageNum).itemView;
-                float x = view.getLeft();
+                mLineView.setLineWidth(view.getWidth());
+                float x = mIsLineAtLeft?view.getLeft():view.getRight()-mLineView.getLineWidth();
                 if (x < 0) {
                     x = 0;
                 }
                 flingX = x;
                 mViewXoffset=x;
-                mLineView.setLineWidth(view.getWidth());
                 Log.e("swc", "x:" + x);
                 mLineView.setTranslationX(x);
                 mLineView.setVisibility(View.VISIBLE);
@@ -120,8 +121,13 @@ public class PhotoActivity extends FragmentActivity implements View.OnClickListe
     public void onPageSelected(int position) {
 //        mHandler.obtainMessage(101, position).sendToTarget();
         Log.e("swc", "postion:" + position);
+        if(mPageNum<=position){
+            mIsLineAtLeft=true;
+        }else {
+            mIsLineAtLeft=false;
+        }
         mPageNum = position;
-        mPageAdapter.onPageSelected(position);
+        mPageAdapter.onPageSelected(position,mIsLineAtLeft);
 //        mRecyclerView.smoothScrollToPosition(position);
         AdapterActivityDetailPageBase.ViewHolder currentHolder = mPageAdapter.getCurrentHolder();
         if (currentHolder != null) {
@@ -146,9 +152,22 @@ public class PhotoActivity extends FragmentActivity implements View.OnClickListe
         public void onScroll(float x, float y) {
             float bottomW=mAdapter.getViewHolder().get(mPageNum).mImg.getWidth();
             float dis =  (x *  bottomW/ mPageAdapter.getCurrentHolder().image.getBmpWidth());
-            flingX =mViewXoffset- dis;
-            if(flingX<mViewXoffset||flingX>mViewXoffset+bottomW-mLineView.getLineWidth()){
-                return;
+            float leftX=bottomW-mLineView.getLineWidth();
+            if(mIsLineAtLeft){
+                flingX =mViewXoffset- dis;
+                if(flingX<mViewXoffset||flingX>mViewXoffset+leftX){
+                    return;
+                }
+            }else {
+                dis=leftX+dis;
+                flingX=mViewXoffset-dis;
+                float minX=mViewXoffset+mLineView.getLineWidth()-bottomW;
+                float maxX=mViewXoffset;
+                if(flingX>maxX||flingX<minX){
+                    return;
+                }
+
+
             }
             mLineView.setTranslationX(flingX);
         }

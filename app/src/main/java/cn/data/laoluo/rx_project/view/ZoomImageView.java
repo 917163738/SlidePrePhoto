@@ -145,6 +145,8 @@ public class ZoomImageView extends ImageView {
         calcBitmapWH();
     }
 
+    private boolean mImageAtLeftOrRight = true;
+
     /**
      * 自己实现初始时图片怎么显示，这里是用matrix实现的center_crop的效果，
      * 而且可以实现以任意的框来center_crop, 系统的scaleType除了fitXy，其他
@@ -207,8 +209,13 @@ public class ZoomImageView extends ImageView {
         dy = mFirstFillRect.top - Yoffset / 2.0f;
 
         mMatrix.setScale(scale, scale);
-        //图片靠左边显示
-        mMatrix.postTranslate(0, Math.round(dy));
+        if (mImageAtLeftOrRight) {
+            //图片靠左边显示
+            mMatrix.postTranslate(0, Math.round(dy));
+        } else {
+            //图片靠右边显示
+            mMatrix.postTranslate(2 * dx, Math.round(dy));
+        }
 //        mMatrix.postTranslate(Math.round(dx), Math.round(dy));
         setImageMatrix(mMatrix);
         checkIsOnSide();
@@ -255,6 +262,12 @@ public class ZoomImageView extends ImageView {
         } else {
             startScaleAnim(mCurrentScale, mMinScale);
         }
+    }
+
+    public void setImageAtLeftOrRight(boolean isLeft) {
+        //TODO 后续修改成上下左右中四个方向
+        mImageAtLeftOrRight = isLeft;
+
     }
 
     @Override
@@ -340,6 +353,7 @@ public class ZoomImageView extends ImageView {
 
     private boolean mIsFirstMove; //有静到拖动
     private boolean mIsFirstScale; //由静止到开始双指缩放
+    private long mLastDragTime;
 
     public int hanleTouchEvent(MotionEvent event, boolean parentIsOnEdge) {
         switch (event.getActionMasked()) {
@@ -427,6 +441,16 @@ public class ZoomImageView extends ImageView {
                             break;
                         }
                     }
+                    if (mLastDragTime == 0) {
+                        mLastDragTime = System.currentTimeMillis();
+                    }
+                    if (System.currentTimeMillis() - mLastDragTime > 300) {
+
+                    }
+                    if (Math.abs(deltaX) > 40) {
+                        deltaX *= 2;
+                    }
+                    Log.e("swc", "deltaX:" + deltaX);
                     checkAndSetTranslate(deltaX, deltaY);
                 } else if (mMode == ZOOM) {
                     mCurrentDistant = getDistance(event);
@@ -471,6 +495,7 @@ public class ZoomImageView extends ImageView {
                 if (mCurrentScale > mMinScale && !mIsOnLeftSide && !mIsOnRightSide) {
                     mMode = DRAG;
                 }
+                mLastDragTime = 0;
                 break;
         }
         return mMode;
@@ -574,7 +599,7 @@ public class ZoomImageView extends ImageView {
         checkIsOnSide();
         if (mOnImageScrollListener != null) {
             //FIXME 放大后移动要除以放大系数
-            mOnImageScrollListener.onScroll(mMatrixX/mCurrentScale, mMatrixY/mCurrentScale);
+            mOnImageScrollListener.onScroll(mMatrixX / mCurrentScale, mMatrixY / mCurrentScale);
         }
     }
 
@@ -605,7 +630,7 @@ public class ZoomImageView extends ImageView {
      */
     private void calcRedundantSpace() {
         mRedundantXSpace = mCurrentScale * mBmpWidth - mMinLimitRect.width();
-        Log.e("swc","mRedundantXSpace:"+mRedundantXSpace);
+        Log.e("swc", "mRedundantXSpace:" + mRedundantXSpace);
         mRedundantYSpace = mCurrentScale * mBmpHeight - mMinLimitRect.height();
     }
 
@@ -646,8 +671,7 @@ public class ZoomImageView extends ImageView {
             setImageMatrix(mMatrix);
             checkIsOnSide();
             if (mOnImageScrollListener != null) {
-                //FIXME 放大后移动要除以放大系数
-                mOnImageScrollListener.onScroll(mMatrixX/mCurrentScale, mMatrixY/mCurrentScale);
+                mOnImageScrollListener.onScroll(mMatrixX / mCurrentScale, mMatrixY / mCurrentScale);
             }
         }
     }

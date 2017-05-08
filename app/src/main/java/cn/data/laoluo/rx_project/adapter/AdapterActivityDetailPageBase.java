@@ -133,7 +133,7 @@ public class AdapterActivityDetailPageBase extends PagerAdapter implements View.
         return mCurrentViewHolder;
     }
 
-    public void onPageSelected(final int position) {
+    public void onPageSelected(final int position,boolean isImageAtLeft) {
         mCurrentPosition = position;
         for (int i = 0; i < mHolders.size(); i++) {
             ViewHolder temp = mHolders.get(i);
@@ -142,10 +142,10 @@ public class AdapterActivityDetailPageBase extends PagerAdapter implements View.
                 break;
             }
         }
-        loadBigImg(mCurrentViewHolder);
+        loadBigImg(mCurrentViewHolder,isImageAtLeft);
     }
 
-    private void loadBigImg(final ViewHolder tempHolder) {
+    private void loadBigImg(final ViewHolder tempHolder,boolean isImageAtLeft) {
         if ( tempHolder == null) {
             return;
         }
@@ -154,6 +154,7 @@ public class AdapterActivityDetailPageBase extends PagerAdapter implements View.
                 return;
             }
             Integer bean = mData.get(tempHolder.position);
+            tempHolder.image.setImageAtLeftOrRight(isImageAtLeft);
             tempHolder.image.setImageResource(bean);
             tempHolder.mCurrentBitmap=((BitmapDrawable)tempHolder.image.getDrawable()).getBitmap();
         }
