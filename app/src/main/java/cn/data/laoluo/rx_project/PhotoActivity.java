@@ -150,6 +150,7 @@ public class PhotoActivity extends FragmentActivity implements View.OnClickListe
     private ZoomImageView.OnImageScrollListener mImageScrollListener = new ZoomImageView.OnImageScrollListener() {
         @Override
         public void onScroll(float x, float y) {
+            //FIXME 出现第二张图片获取的宽度是第一张图片的问题，暂未发现原因
             float bottomW=mAdapter.getViewHolder().get(mPageNum).mImg.getWidth();
             float dis =  (x *  bottomW/ mPageAdapter.getCurrentHolder().image.getBmpWidth());
             float leftX=bottomW-mLineView.getLineWidth();

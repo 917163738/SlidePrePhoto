@@ -145,6 +145,9 @@ public class ZoomImageView extends ImageView {
         calcBitmapWH();
     }
 
+    /**
+     * 图片靠左还是靠右显示
+     */
     private boolean mImageAtLeftOrRight = true;
 
     /**
@@ -209,6 +212,7 @@ public class ZoomImageView extends ImageView {
         dy = mFirstFillRect.top - Yoffset / 2.0f;
 
         mMatrix.setScale(scale, scale);
+        //FIXME 后续修改成上下左右中四个方向
         if (mImageAtLeftOrRight) {
             //图片靠左边显示
             mMatrix.postTranslate(0, Math.round(dy));
@@ -264,6 +268,10 @@ public class ZoomImageView extends ImageView {
         }
     }
 
+    /**
+     * 用于设置viewpager切换时黄框在图片左侧还是右侧
+     * @param isLeft
+     */
     public void setImageAtLeftOrRight(boolean isLeft) {
         //TODO 后续修改成上下左右中四个方向
         mImageAtLeftOrRight = isLeft;
@@ -447,6 +455,7 @@ public class ZoomImageView extends ImageView {
                     if (System.currentTimeMillis() - mLastDragTime > 300) {
 
                     }
+                    //FIXME 此处有待优化图片滑动的效果
                     if (Math.abs(deltaX) > 40) {
                         deltaX *= 2;
                     }
@@ -598,7 +607,6 @@ public class ZoomImageView extends ImageView {
         setImageMatrix(mMatrix);
         checkIsOnSide();
         if (mOnImageScrollListener != null) {
-            //FIXME 放大后移动要除以放大系数
             mOnImageScrollListener.onScroll(mMatrixX / mCurrentScale, mMatrixY / mCurrentScale);
         }
     }
@@ -779,6 +787,9 @@ public class ZoomImageView extends ImageView {
         mOnImageScrollListener = onImageScrollListener;
     }
 
+    /**
+     * 图片滑动监听
+     */
     public interface OnImageScrollListener {
         void onScroll(float x, float y);
     }

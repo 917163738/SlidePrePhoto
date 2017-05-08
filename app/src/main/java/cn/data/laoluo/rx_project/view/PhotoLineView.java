@@ -26,26 +26,31 @@ public class PhotoLineView extends View {
 
 
     private int mLineWidth = 0;
-private int mOriginHeight,mOriginWidth;
-    public void setOriginSize(int width,int height){
-        mOriginHeight=height;
-        mOriginWidth=width;
+    private int mOriginHeight, mOriginWidth;
+
+    /**
+     * 设置背景大图的显示区域尺寸，用来计算黄圈的宽度
+     * @param width
+     * @param height
+     */
+    public void setOriginSize(int width, int height) {
+        mOriginHeight = height;
+        mOriginWidth = width;
     }
+
     /**
      * 根据手机尺寸与图片宽带动态设置黄圈宽度
      *
      * @param imgWidth
      */
     public void setLineWidth(int imgWidth) {
-        DisplayMetrics dm = getResources().getDisplayMetrics();
-        //TODO TEST
+//        DisplayMetrics dm = getResources().getDisplayMetrics();
 //        int dWidth = dm.widthPixels * getHeight() / 2560;
 //        int dWidth = dm.widthPixels * getHeight() / dm.heightPixels;
-        int dWidth =mOriginWidth * getHeight() / mOriginHeight;
+        int dWidth = mOriginWidth * getHeight() / mOriginHeight;
 
 
         Log.e("swc", "dWidth:" + dWidth);
-        Log.e("swc", "dHidth:" + dm.heightPixels + " height:" + getHeight());
         if (imgWidth < dWidth) {
             mLineWidth = imgWidth;
         } else {
@@ -55,9 +60,11 @@ private int mOriginHeight,mOriginWidth;
         postInvalidate();
 
     }
-public int getLineWidth(){
-    return mLineWidth;
-}
+
+    public int getLineWidth() {
+        return mLineWidth;
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
