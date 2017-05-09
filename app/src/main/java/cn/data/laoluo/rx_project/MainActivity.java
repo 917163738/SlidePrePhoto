@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import cn.data.laoluo.rx_project.android_rx.RxUtils;
+import cn.data.laoluo.rx_project.drag.DragActivity;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -46,6 +47,11 @@ public class MainActivity extends ActionBarActivity {
     }
     public  void  viewpager(View view){
         Intent intent=new Intent(MainActivity.this,PhotoActivity.class);
+        MainActivity.this.startActivity(intent);
+
+    }
+    public  void  drag(View view){
+        Intent intent=new Intent(MainActivity.this,DragActivity.class);
         MainActivity.this.startActivity(intent);
 
     }
