@@ -150,8 +150,20 @@ public class PhotoActivity extends FragmentActivity implements View.OnClickListe
     private ZoomImageView.OnImageScrollListener mImageScrollListener = new ZoomImageView.OnImageScrollListener() {
         @Override
         public void onScroll(float x, float y) {
-            //FIXME 出现第二张图片获取的宽度是第一张图片的问题，暂未发现原因
-            float bottomW=mAdapter.getViewHolder().get(mPageNum).mImg.getWidth();
+            //1.解决直接获取imageview宽带发生变化导致计算超出，2.解决getchildat位置与position不一致
+            Log.e("swc","num:"+mPageNum);
+            int fPosition=((LinearLayoutManager)mRecyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+            int lPosition=((LinearLayoutManager)mRecyclerView.getLayoutManager()).findLastVisibleItemPosition();
+//            float bottomW=mRecyclerView.getLayoutManager().findViewByPosition(mPageNum).getWidth();
+            if(fPosition>mPageNum){
+                return;
+            }
+            if(mPageNum-fPosition>lPosition){
+                return;
+            }
+            float bottomW=mRecyclerView.getLayoutManager().getChildAt(mPageNum-fPosition).getWidth();
+//            float bottomW=mAdapter.getImageViews().get(mPageNum).getWidth();
+            Log.e("swc","view width:"+bottomW);
             float dis =  (x *  bottomW/ mPageAdapter.getCurrentHolder().image.getBmpWidth());
             float leftX=bottomW-mLineView.getLineWidth();
             if(mIsLineAtLeft){

@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -37,15 +38,10 @@ public class GalleryAdapter extends
         public ViewHolder(View arg0) {
             super(arg0);
         }
-
         ImageView mImg;
     }
 
-    private ArrayList<ViewHolder> mViewHolders = new ArrayList<>();
 
-    public ArrayList<ViewHolder> getViewHolder() {
-        return mViewHolders;
-    }
 
     @Override
     public int getItemCount() {
@@ -63,12 +59,9 @@ public class GalleryAdapter extends
         return viewHolder;
     }
 
-    private ViewHolder mViewHolder;
-
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, final int i) {
         viewHolder.mImg.setImageResource(mDatas.get(i));
-
         if (mOnItemClickLitener != null) {
             viewHolder.itemView.setOnClickListener(new OnClickListener() {
                 @Override
@@ -78,7 +71,6 @@ public class GalleryAdapter extends
             });
 
         }
-        mViewHolders.add(viewHolder);
     }
 
 }
